@@ -7,7 +7,7 @@ namespace TwoDGameEngine
 {
     public static class SaveState
     {
-        public static string PathPlayer = $"{ Environment.SpecialFolder.ApplicationData }" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "config.xml";
+        public static string ConfigPath = $"{ Environment.SpecialFolder.ApplicationData }" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + "config.xml";
 
         //Controls AutoSave is enabled or not
         public static bool AutoSave = true;
@@ -57,14 +57,14 @@ namespace TwoDGameEngine
         //Load values from config
         public static void LoadConfig()
         {
-            if (File.Exists(PathPlayer))
+            if (File.Exists(ConfigPath))
             {
 
                 //Sets players info to config values
                 Values statePlayer = new Values();
 
                 XmlSerializer serializerPlayer = new XmlSerializer(typeof(Values));
-                using (FileStream fsEnemies = File.OpenRead(PathPlayer))
+                using (FileStream fsEnemies = File.OpenRead(ConfigPath))
                 {
                     statePlayer = (Values)serializerPlayer.Deserialize(fsEnemies);
                 }
@@ -80,18 +80,18 @@ namespace TwoDGameEngine
             {
                 //Create configs if they do not exist
                 Directory.CreateDirectory($"{ Environment.SpecialFolder.ApplicationData }" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
-                File.Create(PathPlayer);
+                File.Create(ConfigPath);
             }
         }
 
         //Store values to config
         public static void WriteConfig(Values v)
         {
-            if (File.Exists(PathPlayer))
+            if (File.Exists(ConfigPath))
             {
                 //write player values to file in %appdata%
                 XmlSerializer serializerPlayer = new XmlSerializer(typeof(Values));
-                using (TextWriter twPlayer = new StreamWriter(PathPlayer))
+                using (TextWriter twPlayer = new StreamWriter(ConfigPath))
                 {
                     serializerPlayer.Serialize(twPlayer, v);
                 }
