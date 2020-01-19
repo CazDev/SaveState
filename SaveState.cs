@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace TwoDGameEngine
+namespace SaveState
 {
     public static class SaveState
     {
