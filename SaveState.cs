@@ -61,20 +61,20 @@ namespace TwoDGameEngine
             {
 
                 //Sets players info to config values
-                Values statePlayer = new Values();
+                Values state = new Values();
 
                 XmlSerializer serializerPlayer = new XmlSerializer(typeof(Values));
                 using (FileStream fsEnemies = File.OpenRead(ConfigPath))
                 {
-                    statePlayer = (Values)serializerPlayer.Deserialize(fsEnemies);
+                    state = (Values)serializerPlayer.Deserialize(fsEnemies);
                 }
 
                 int someInt = 1;
                 string someString = "test";
 
                 //Sets application info to config values
-                someInt = statePlayer.var1;
-                someString = statePlayer.var2;
+                someInt = state.var1;
+                someString = state.var2;
             }
             else
             {
