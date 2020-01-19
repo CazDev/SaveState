@@ -63,10 +63,10 @@ namespace SaveState
                 //Sets players info to config values
                 Values state = new Values();
 
-                XmlSerializer serializerPlayer = new XmlSerializer(typeof(Values));
-                using (FileStream fsEnemies = File.OpenRead(ConfigPath))
+                XmlSerializer serializer = new XmlSerializer(typeof(Values));
+                using (FileStream fs = File.OpenRead(ConfigPath))
                 {
-                    state = (Values)serializerPlayer.Deserialize(fsEnemies);
+                    state = (Values)serializer.Deserialize(fs);
                 }
 
                 int someInt = 1;
@@ -87,14 +87,16 @@ namespace SaveState
         //Store values to config
         public static void WriteConfig(Values v)
         {
-            if (File.Exists(ConfigPath))
+            if (!File.Exists(ConfigPath))
             {
-                //write player values to file in %appdata%
-                XmlSerializer serializerPlayer = new XmlSerializer(typeof(Values));
-                using (TextWriter twPlayer = new StreamWriter(ConfigPath))
-                {
-                    serializerPlayer.Serialize(twPlayer, v);
-                }
+                File.Create(ConfigPath).Dispose();
+            }
+
+            //write player values to file in %appdata%
+            XmlSerializer serializer = new XmlSerializer(typeof(Values));
+            using (TextWriter tw = new StreamWriter(ConfigPath))
+            {
+                serializer.Serialize(tw, v);
             }
         }
     }
