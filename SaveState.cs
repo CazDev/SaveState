@@ -23,7 +23,7 @@ namespace SaveState
         }
 
         //Saves values ready to be stored
-        public static void SaveValues()
+        public static void SaveConfig(Values values)
         {
             //update values
             Values state = new Values();
@@ -37,13 +37,13 @@ namespace SaveState
         }
 
         //AutoSave values
-        public static async void AutoSaveValues()
+        public static async void AutoSaveValues(Values values)
         {
             while (true)
             {
                 while (AutoSave)
                 {
-                    SaveValues();
+                    SaveConfig(values);
 
                     Console.WriteLine("Config has been saved.");
 
@@ -55,7 +55,7 @@ namespace SaveState
         }
 
         //Load values from config
-        public static void LoadConfig()
+        public static void LoadConfig(Values values)
         {
             if (File.Exists(ConfigPath))
             {
@@ -68,13 +68,9 @@ namespace SaveState
                 {
                     state = (Values)serializer.Deserialize(fs);
                 }
-
-                int someInt = 1;
-                string someString = "test";
-
                 //Sets application info to config values
-                someInt = state.var1;
-                someString = state.var2;
+                values.val1 = state.val1;
+                values.val2 = state.val2
             }
             else
             {
@@ -85,7 +81,7 @@ namespace SaveState
         }
 
         //Store values to config
-        public static void WriteConfig(Values v)
+        public static void WriteConfig(Values values)
         {
             if (!File.Exists(ConfigPath))
             {
@@ -96,7 +92,7 @@ namespace SaveState
             XmlSerializer serializer = new XmlSerializer(typeof(Values));
             using (TextWriter tw = new StreamWriter(ConfigPath))
             {
-                serializer.Serialize(tw, v);
+                serializer.Serialize(tw, values);
             }
         }
     }
