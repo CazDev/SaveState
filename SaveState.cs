@@ -69,6 +69,7 @@ namespace SaveState
                     state = (Values)serializer.Deserialize(fs);
                 }
                 //Sets application info to config values
+                //TODO: change loaded values
                 values.val1 = state.val1;
                 values.val2 = state.val2
             }
